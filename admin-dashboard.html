@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Nexio</title>
+    <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🛍️ Nexio Admin</div>
+            <nav class="admin-nav">
+                <a href="admin-dashboard.html" class="admin-nav-link active">📊 Tableau de bord</a>
+                <a href="admin-products.html" class="admin-nav-link">📦 Produits</a>
+                <a href="admin-orders.html" class="admin-nav-link">📋 Commandes</a>
+                <a href="admin-customers.html" class="admin-nav-link">👥 Clients</a>
+                <a href="admin-settings.html" class="admin-nav-link">⚙️ Paramètres</a>
+            </nav>
+            <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Tableau de bord</h1>
+                <div class="admin-user">Admin</div>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-box" onclick="window.location.href='admin-orders.html'" style="cursor:pointer">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <div class="stat-value">12,847€</div>
+                        <div class="stat-label">Revenus totaux</div>
+                    </div>
+                </div>
+                <div class="stat-box" onclick="window.location.href='admin-products.html'" style="cursor:pointer">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-info">
+                        <div class="stat-value">247</div>
+                        <div class="stat-label">Produits</div>
+                    </div>
+                </div>
+                <div class="stat-box" onclick="window.location.href='admin-orders.html'" style="cursor:pointer">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-info">
+                        <div class="stat-value">1,284</div>
+                        <div class="stat-label">Commandes</div>
+                    </div>
+                </div>
+                <div class="stat-box" onclick="window.location.href='admin-customers.html'" style="cursor:pointer">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <div class="stat-value">542</div>
+                        <div class="stat-label">Clients</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-content" style="display:grid;grid-template-columns:2fr 1fr;gap:2rem">
+                <div class="admin-card">
+                    <h2>Commandes récentes</h2>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>N° Commande</th>
+                                <th>Client</th>
+                                <th>Montant</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#10284</td>
+                                <td>Jean Dupont</td>
+                                <td>89.99€</td>
+                                <td><span class="badge-success">Livrée</span></td>
+                            </tr>
+                            <tr>
+                                <td>#10283</td>
+                                <td>Marie Martin</td>
+                                <td>149.99€</td>
+                                <td><span class="badge-warning">En cours</span></td>
+                            </tr>
+                            <tr>
+                                <td>#10282</td>
+                                <td>Pierre Leroy</td>
+                                <td>59.99€</td>
+                                <td><span class="badge-info">En préparation</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align:center;margin-top:1.5rem">
+                        <a href="admin-orders.html" class="btn-secondary-admin" style="display:inline-block">Voir toutes les commandes →</a>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h2>Produits populaires</h2>
+                    <div class="popular-products">
+                        <div class="popular-item">
+                            <span>⌚</span>
+                            <div>
+                                <strong>Smartwatch Pro</strong>
+                                <p>89 ventes</p>
+                            </div>
+                        </div>
+                        <div class="popular-item">
+                            <span>🎧</span>
+                            <div>
+                                <strong>Écouteurs Bluetooth</strong>
+                                <p>76 ventes</p>
+                            </div>
+                        </div>
+                        <div class="popular-item">
+                            <span>💡</span>
+                            <div>
+                                <strong>Lampe LED Smart</strong>
+                                <p>54 ventes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;margin-top:1.5rem">
+                        <a href="admin-products.html" class="btn-secondary-admin" style="display:inline-block">Gérer les produits →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card" style="margin-top:2rem">
+                <h2>Accès rapides</h2>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem">
+                    <a href="admin-products.html" class="quick-link-card">
+                        <span style="font-size:2rem">📦</span>
+                        <strong>Ajouter un produit</strong>
+                    </a>
+                    <a href="admin-orders.html" class="quick-link-card">
+                        <span style="font-size:2rem">📋</span>
+                        <strong>Voir les commandes</strong>
+                    </a>
+                    <a href="admin-customers.html" class="quick-link-card">
+                        <span style="font-size:2rem">👥</span>
+                        <strong>Gérer les clients</strong>
+                    </a>
+                    <a href="admin-settings.html" class="quick-link-card">
+                        <span style="font-size:2rem">⚙️</span>
+                        <strong>Paramètres</strong>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    if (!localStorage.getItem('adminAuth')) {
+        window.location.href = 'admin-login.html';
+    }
+
+    function logout() {
+        localStorage.removeItem('adminAuth');
+        window.location.href = 'admin-login.html';
+    }
+    </script>
+    
+    <style>
+    .quick-link-card{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.5rem;background:#f8fafc;border-radius:12px;text-decoration:none;color:#1f2937;transition:all 0.3s;border:2px solid transparent}
+    .quick-link-card:hover{background:white;border-color:var(--primary);transform:translateY(-3px)}
+    </style>
+</body>
+</html>

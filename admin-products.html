@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Produits - Admin Nexio</title>
+    <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🛍️ Nexio Admin</div>
+            <nav class="admin-nav">
+                <a href="admin-dashboard.html" class="admin-nav-link">📊 Tableau de bord</a>
+                <a href="admin-products.html" class="admin-nav-link active">📦 Produits</a>
+                <a href="admin-orders.html" class="admin-nav-link">📋 Commandes</a>
+                <a href="admin-customers.html" class="admin-nav-link">👥 Clients</a>
+                <a href="admin-settings.html" class="admin-nav-link">⚙️ Paramètres</a>
+            </nav>
+            <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Gestion des Produits</h1>
+                <button class="btn-primary-large" onclick="showAddProductModal()">➕ Ajouter un produit</button>
+            </div>
+
+            <div class="admin-card">
+                <div class="admin-toolbar">
+                    <input type="text" placeholder="Rechercher un produit..." class="search-input-admin" id="productSearch" oninput="filterAdminProducts()">
+                    <select class="filter-select-admin" id="categoryFilterAdmin" onchange="filterAdminProducts()">
+                        <option value="all">Toutes catégories</option>
+                        <option value="electronique">Électronique</option>
+                        <option value="vetements">Vêtements</option>
+                        <option value="maison">Maison</option>
+                        <option value="sport">Sport</option>
+                        <option value="beaute">Beauté</option>
+                    </select>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Catégorie</th>
+                            <th>Prix</th>
+                            <th>Stock</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Ajouter/Modifier Produit -->
+    <div class="modal" id="productModal">
+        <div class="modal-overlay" onclick="closeProductModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeProductModal()">×</button>
+            <div class="modal-body">
+                <h2 id="modalTitle">Ajouter un produit</h2>
+                <form class="admin-form" onsubmit="saveProduct(event)">
+                    <div class="form-group">
+                        <label>Nom du produit *</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-row-admin">
+                        <div class="form-group">
+                            <label>Catégorie *</label>
+                            <select id="productCategory" required>
+                                <option value="electronique">Électronique</option>
+                                <option value="vetements">Vêtements</option>
+                                <option value="maison">Maison</option>
+                                <option value="sport">Sport</option>
+                                <option value="beaute">Beauté</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Prix (€) *</label>
+                            <input type="number" id="productPrice" step="0.01" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="productDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-row-admin">
+                        <div class="form-group">
+                            <label>Icône (emoji)</label>
+                            <input type="text" id="productIcon" placeholder="📱">
+                        </div>
+                        <div class="form-group">
+                            <label>Stock</label>
+                            <input type="number" id="productStock" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label-admin">
+                            <input type="checkbox" id="productActive" checked>
+                            <span>Produit actif</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    if (!localStorage.getItem('adminAuth')) {
+        window.location.href = 'admin-login.html';
+    }
+
+    let products = JSON.parse(localStorage.getItem('adminProducts') || '[]');
+    let editingProductId = null;
+
+    if (products.length === 0) {
+       products = [
+    {id:1,name:"Smartwatch Pro",category:"electronique",price:89.99,description:"Montre connectée",icon:"⌚",stock:45,active:true},
+    {id:2,name:"Écouteurs Bluetooth",category:"electronique",price:49.99,description:"Audio HD",icon:"🎧",stock:78,active:true},
+    {id:3,name:"Casque Gaming RGB",category:"electronique",price:79.99,description:"Son surround 7.1",icon:"🎮",stock:56,active:true},
+    {id:4,name:"Clavier Mécanique",category:"electronique",price:109.99,description:"Switches mécaniques RGB",icon:"⌨️",stock:32,active:true},
+    {id:5,name:"Souris Gaming Pro",category:"electronique",price:59.99,description:"16000 DPI, ultra précise",icon:"🖱️",stock:64,active:true},
+    {id:6,name:"Tablette 10 pouces",category:"electronique",price:199.99,description:"Écran HD, 64Go",icon:"📱",stock:25,active:true},
+    {id:7,name:"Enceinte Bluetooth",category:"electronique",price:69.99,description:"Son puissant, étanche",icon:"🔊",stock:80,active:true},
+    {id:8,name:"Webcam Full HD",category:"electronique",price:39.99,description:"1080p avec micro intégré",icon:"📷",stock:47,active:true},
+    {id:9,name:"Chargeur Sans Fil",category:"electronique",price:29.99,description:"Recharge rapide 15W",icon:"🔋",stock:90,active:true},
+    {id:10,name:"Mini Drone HD",category:"electronique",price:149.99,description:"Caméra 4K, contrôle via app",icon:"🚁",stock:18,active:true}
+];
+
+        localStorage.setItem('adminProducts', JSON.stringify(products));
+    }
+
+    function renderProducts() {
+        const tbody = document.getElementById('productsTableBody');
+        const searchTerm = document.getElementById('productSearch').value.toLowerCase();
+        const categoryFilter = document.getElementById('categoryFilterAdmin').value;
+
+        const filtered = products.filter(p => {
+            const matchSearch = p.name.toLowerCase().includes(searchTerm);
+            const matchCategory = categoryFilter === 'all' || p.category === categoryFilter;
+            return matchSearch && matchCategory;
+        });
+
+        tbody.innerHTML = filtered.map(p => `
+            <tr>
+                <td>#${p.id}</td>
+                <td><div class="product-icon-cell">${p.icon}</div></td>
+                <td><strong>${p.name}</strong></td>
+                <td><span class="badge-category">${p.category}</span></td>
+                <td><strong>${p.price.toFixed(2)}€</strong></td>
+                <td>${p.stock}</td>
+                <td>${p.active ? '<span class="badge-success">Actif</span>' : '<span class="badge-warning">Inactif</span>'}</td>
+                <td>
+                    <button class="btn-icon-admin" onclick="editProduct(${p.id})" title="Modifier">✏️</button>
+                    <button class="btn-icon-admin" onclick="toggleProductStatus(${p.id})" title="${p.active ? 'Désactiver' : 'Activer'}">${p.active ? '🔴' : '🟢'}</button>
+                    <button class="btn-icon-admin" onclick="deleteProduct(${p.id})" title="Supprimer">🗑️</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function filterAdminProducts() {
+        renderProducts();
+    }
+
+    function showAddProductModal() {
+        editingProductId = null;
+        document.getElementById('modalTitle').textContent = 'Ajouter un produit';
+        document.getElementById('productName').value = '';
+        document.getElementById('productCategory').value = 'electronique';
+        document.getElementById('productPrice').value = '';
+        document.getElementById('productDescription').value = '';
+        document.getElementById('productIcon').value = '';
+        document.getElementById('productStock').value = '100';
+        document.getElementById('productActive').checked = true;
+        document.getElementById('productModal').classList.add('active');
+    }
+
+    function editProduct(id) {
+        const product = products.find(p => p.id === id);
+        if (!product) return;
+
+        editingProductId = id;
+        document.getElementById('modalTitle').textContent = 'Modifier le produit';
+        document.getElementById('productName').value = product.name;
+        document.getElementById('productCategory').value = product.category;
+        document.getElementById('productPrice').value = product.price;
+        document.getElementById('productDescription').value = product.description || '';
+        document.getElementById('productIcon').value = product.icon;
+        document.getElementById('productStock').value = product.stock;
+        document.getElementById('productActive').checked = product.active;
+        document.getElementById('productModal').classList.add('active');
+    }
+
+    function saveProduct(e) {
+        e.preventDefault();
+        
+        const productData = {
+            name: document.getElementById('productName').value,
+            category: document.getElementById('productCategory').value,
+            price: parseFloat(document.getElementById('productPrice').value),
+            description: document.getElementById('productDescription').value,
+            icon: document.getElementById('productIcon').value || '📦',
+            stock: parseInt(document.getElementById('productStock').value),
+            active: document.getElementById('productActive').checked
+        };
+
+        if (editingProductId) {
+            const index = products.findIndex(p => p.id === editingProductId);
+            products[index] = { ...products[index], ...productData };
+        } else {
+            const newId = Math.max(...products.map(p => p.id), 0) + 1;
+            products.push({ id: newId, ...productData });
+        }
+
+        localStorage.setItem('adminProducts', JSON.stringify(products));
+        closeProductModal();
+        renderProducts();
+        alert('✅ Produit enregistré !');
+    }
+
+    function toggleProductStatus(id) {
+        const product = products.find(p => p.id === id);
+        if (product) {
+            product.active = !product.active;
+            localStorage.setItem('adminProducts', JSON.stringify(products));
+            renderProducts();
+        }
+    }
+
+    function deleteProduct(id) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('adminProducts', JSON.stringify(products));
+            renderProducts();
+            alert('✅ Produit supprimé !');
+        }
+    }
+
+    function closeProductModal() {
+        document.getElementById('productModal').classList.remove('active');
+    }
+
+    function logout() {
+        localStorage.removeItem('adminAuth');
+        window.location.href = 'admin-login.html';
+    }
+
+    renderProducts();
+    </script>
+</body>
+</html>

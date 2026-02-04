@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres - Admin Nexio</title>
+    <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🛍️ Nexio Admin</div>
+            <nav class="admin-nav">
+                <a href="admin-dashboard.html" class="admin-nav-link">📊 Tableau de bord</a>
+                <a href="admin-products.html" class="admin-nav-link">📦 Produits</a>
+                <a href="admin-orders.html" class="admin-nav-link">📋 Commandes</a>
+                <a href="admin-customers.html" class="admin-nav-link">👥 Clients</a>
+                <a href="admin-settings.html" class="admin-nav-link active">⚙️ Paramètres</a>
+            </nav>
+            <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Paramètres</h1>
+            </div>
+
+            <div class="settings-grid-admin">
+                <!-- Informations boutique -->
+                <div class="admin-card">
+                    <h2>Informations de la boutique</h2>
+                    <form class="admin-form" onsubmit="saveShopInfo(event)">
+                        <div class="form-group">
+                            <label>Nom de la boutique</label>
+                            <input type="text" id="shopName" value="Nexio">
+                        </div>
+                        <div class="form-group">
+                            <label>Email de contact</label>
+                            <input type="email" id="shopEmail" value="contact@nexio.fr">
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone</label>
+                            <input type="tel" id="shopPhone" value="07 68 44 40 51">
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            <textarea id="shopAddress" rows="2">Lyon, France</textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Enregistrer</button>
+                    </form>
+                </div>
+
+                <!-- Paramètres livraison -->
+                <div class="admin-card">
+                    <h2>Livraison</h2>
+                    <form class="admin-form" onsubmit="saveShipping(event)">
+                        <div class="form-group">
+                            <label>Livraison gratuite à partir de</label>
+                            <input type="number" id="freeShippingThreshold" value="50"> €
+                        </div>
+                        <div class="form-group">
+                            <label>Frais de port standards</label>
+                            <input type="number" id="shippingCost" value="0"> €
+                        </div>
+                        <div class="form-group">
+                            <label>Délai de livraison</label>
+                            <input type="text" id="deliveryTime" value="5-7 jours">
+                        </div>
+                        <button type="submit" class="btn-submit">Enregistrer</button>
+                    </form>
+                </div>
+
+                <!-- Notifications -->
+                <div class="admin-card">
+                    <h2>Notifications</h2>
+                    <div class="notification-settings">
+                        <label class="checkbox-label-admin">
+                            <input type="checkbox" checked>
+                            <span>Email lors de nouvelle commande</span>
+                        </label>
+                        <label class="checkbox-label-admin">
+                            <input type="checkbox" checked>
+                            <span>Email stock faible</span>
+                        </label>
+                        <label class="checkbox-label-admin">
+                            <input type="checkbox">
+                            <span>Notifications push</span>
+                        </label>
+                        <label class="checkbox-label-admin">
+                            <input type="checkbox" checked>
+                            <span>Rapport hebdomadaire</span>
+                        </label>
+                    </div>
+                    <button class="btn-submit" onclick="alert('✅ Préférences enregistrées')">Enregistrer</button>
+                </div>
+
+                <!-- Sécurité -->
+                <div class="admin-card">
+                    <h2>Sécurité</h2>
+                    <form class="admin-form" onsubmit="changePassword(event)">
+                        <div class="form-group">
+                            <label>Mot de passe actuel</label>
+                            <input type="password" id="currentPassword">
+                        </div>
+                        <div class="form-group">
+                            <label>Nouveau mot de passe</label>
+                            <input type="password" id="newPassword">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmer le mot de passe</label>
+                            <input type="password" id="confirmPassword">
+                        </div>
+                        <button type="submit" class="btn-submit">Changer le mot de passe</button>
+                    </form>
+                    <div class="security-info">
+                        <p>🔒 Dernière connexion : 04/02/2025 à 14:32</p>
+                        <p>📱 Authentification à deux facteurs : <span class="badge-warning">Désactivée</span></p>
+                    </div>
+                </div>
+
+                <!-- Base de données -->
+                <div class="admin-card">
+                    <h2>Base de données</h2>
+                    <div class="database-actions">
+                        <button class="btn-secondary-admin" onclick="exportData()">📥 Exporter les données</button>
+                        <button class="btn-secondary-admin" onclick="importData()">📤 Importer des données</button>
+                        <button class="btn-danger-admin" onclick="resetData()">🗑️ Réinitialiser tout</button>
+                    </div>
+                    <div class="database-info">
+                        <p>Produits : <strong id="dbProducts">0</strong></p>
+                        <p>Commandes : <strong id="dbOrders">0</strong></p>
+                        <p>Clients : <strong id="dbCustomers">0</strong></p>
+                    </div>
+                </div>
+
+                <!-- Apparence -->
+                <div class="admin-card">
+                    <h2>Apparence</h2>
+                    <div class="appearance-settings">
+                        <div class="form-group">
+                            <label>Couleur primaire</label>
+                            <input type="color" value="#2563eb">
+                        </div>
+                        <div class="form-group">
+                            <label>Couleur secondaire</label>
+                            <input type="color" value="#7c3aed">
+                        </div>
+                        <label class="checkbox-label-admin">
+                            <input type="checkbox" checked>
+                            <span>Afficher les promotions</span>
+                        </label>
+                        <label class="checkbox-label-admin">
+                            <input type="checkbox" checked>
+                            <span>Afficher la newsletter</span>
+                        </label>
+                    </div>
+                    <button class="btn-submit" onclick="alert('✅ Apparence mise à jour')">Enregistrer</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    if (!localStorage.getItem('adminAuth')) {
+        window.location.href = 'admin-login.html';
+    }
+
+    function saveShopInfo(e) {
+        e.preventDefault();
+        alert('✅ Informations de la boutique enregistrées !');
+    }
+
+    function saveShipping(e) {
+        e.preventDefault();
+        alert('✅ Paramètres de livraison enregistrés !');
+    }
+
+    function changePassword(e) {
+        e.preventDefault();
+        const current = document.getElementById('currentPassword').value;
+        const newPass = document.getElementById('newPassword').value;
+        const confirm = document.getElementById('confirmPassword').value;
+
+        if (newPass !== confirm) {
+            alert('❌ Les mots de passe ne correspondent pas');
+            return;
+        }
+        alert('✅ Mot de passe changé avec succès !');
+        e.target.reset();
+    }
+
+    function exportData() {
+        const data = {
+            products: JSON.parse(localStorage.getItem('adminProducts') || '[]'),
+            orders: JSON.parse(localStorage.getItem('adminOrders') || '[]')
+        };
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'nexio-export-' + new Date().toISOString().split('T')[0] + '.json';
+        link.click();
+        alert('✅ Données exportées !');
+    }
+
+    function importData() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    if (data.products) localStorage.setItem('adminProducts', JSON.stringify(data.products));
+                    if (data.orders) localStorage.setItem('adminOrders', JSON.stringify(data.orders));
+                    alert('✅ Données importées ! Rechargez la page.');
+                } catch (err) {
+                    alert('❌ Erreur lors de l\'import');
+                }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
+
+    function resetData() {
+        if (confirm('⚠️ ATTENTION : Cela va supprimer TOUTES les données (produits, commandes). Continuer ?')) {
+            if (confirm('Êtes-vous VRAIMENT sûr ? Cette action est irréversible !')) {
+                localStorage.removeItem('adminProducts');
+                localStorage.removeItem('adminOrders');
+                alert('✅ Toutes les données ont été supprimées. Rechargez la page.');
+            }
+        }
+    }
+
+    function updateDBInfo() {
+        const products = JSON.parse(localStorage.getItem('adminProducts') || '[]');
+        const orders = JSON.parse(localStorage.getItem('adminOrders') || '[]');
+        document.getElementById('dbProducts').textContent = products.length;
+        document.getElementById('dbOrders').textContent = orders.length;
+        document.getElementById('dbCustomers').textContent = '5';
+    }
+
+    function logout() {
+        localStorage.removeItem('adminAuth');
+        window.location.href = 'admin-login.html';
+    }
+
+    updateDBInfo();
+    </script>
+</body>
+</html>

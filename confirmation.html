@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation - ShopDrop</title>
+    <link rel="stylesheet" href="css/store.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛍️</text></svg>">
+</head>
+<body>
+    <header class="store-header">
+        <div class="header-container">
+            <div class="logo">🛍️ ShopDrop</div>
+        </div>
+    </header>
+
+    <div class="confirmation-page">
+        <div class="confirmation-container">
+            <div class="confirmation-icon">✅</div>
+            <h1>Commande confirmée !</h1>
+            <p class="confirmation-message">
+                Merci pour votre commande ! Vous allez recevoir un email de confirmation à l'adresse indiquée.
+            </p>
+
+            <div class="order-details">
+                <h2>Détails de votre commande</h2>
+                <div class="detail-row">
+                    <span>Numéro de commande :</span>
+                    <strong id="orderNumber">#0000</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Date :</span>
+                    <strong id="orderDate"></strong>
+                </div>
+                <div class="detail-row">
+                    <span>Total :</span>
+                    <strong id="orderTotal">0.00 €</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Livraison estimée :</span>
+                    <strong id="deliveryDate"></strong>
+                </div>
+            </div>
+
+            <div class="order-items">
+                <h3>Articles commandés</h3>
+                <div id="orderItemsList"></div>
+            </div>
+
+            <div class="confirmation-actions">
+                <a href="index.html" class="btn-primary">Continuer mes achats</a>
+                <button onclick="window.print()" class="btn-secondary">Imprimer la confirmation</button>
+            </div>
+
+            <div class="next-steps">
+                <h3>Prochaines étapes</h3>
+                <div class="steps-grid">
+                    <div class="step-item">
+                        <span class="step-number">1</span>
+                        <h4>Confirmation par email</h4>
+                        <p>Vous recevrez un email de confirmation dans quelques minutes</p>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">2</span>
+                        <h4>Préparation</h4>
+                        <p>Votre commande sera préparée sous 24-48h</p>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">3</span>
+                        <h4>Expédition</h4>
+                        <p>Vous recevrez un numéro de suivi par email</p>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">4</span>
+                        <h4>Livraison</h4>
+                        <p>Réception dans 5-7 jours ouvrés</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="store-footer">
+        <div class="container">
+            <p>&copy; 2025 ShopDrop. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/confirmation.js"></script>
+</body>
+</html>

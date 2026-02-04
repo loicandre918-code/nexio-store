@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Commandes - Admin Nexio</title>
+    <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🛍️ Nexio Admin</div>
+            <nav class="admin-nav">
+                <a href="admin-dashboard.html" class="admin-nav-link">📊 Tableau de bord</a>
+                <a href="admin-products.html" class="admin-nav-link">📦 Produits</a>
+                <a href="admin-orders.html" class="admin-nav-link active">📋 Commandes</a>
+                <a href="admin-customers.html" class="admin-nav-link">👥 Clients</a>
+                <a href="admin-settings.html" class="admin-nav-link">⚙️ Paramètres</a>
+            </nav>
+            <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Gestion des Commandes</h1>
+                <div class="admin-stats-mini">
+                    <div class="stat-mini">
+                        <span>Total commandes</span>
+                        <strong id="totalOrders">0</strong>
+                    </div>
+                    <div class="stat-mini">
+                        <span>Revenus</span>
+                        <strong id="totalRevenue">0€</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="admin-toolbar">
+                    <input type="text" placeholder="Rechercher N° commande, client..." class="search-input-admin" id="orderSearch" oninput="filterOrders()">
+                    <select class="filter-select-admin" id="statusFilter" onchange="filterOrders()">
+                        <option value="all">Tous les statuts</option>
+                        <option value="pending">En attente</option>
+                        <option value="processing">En préparation</option>
+                        <option value="shipped">Expédiée</option>
+                        <option value="delivered">Livrée</option>
+                        <option value="cancelled">Annulée</option>
+                    </select>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>N° Commande</th>
+                            <th>Date</th>
+                            <th>Client</th>
+                            <th>Articles</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Détails Commande -->
+    <div class="modal" id="orderModal">
+        <div class="modal-overlay" onclick="closeOrderModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeOrderModal()">×</button>
+            <div class="modal-body" id="orderDetailsBody"></div>
+        </div>
+    </div>
+
+    <script>
+    if (!localStorage.getItem('adminAuth')) {
+        window.location.href = 'admin-login.html';
+    }
+
+    let orders = JSON.parse(localStorage.getItem('adminOrders') || '[]');
+
+    if (orders.length === 0) {
+        orders = [
+            {id:10284,date:'2025-02-03',customer:'Jean Dupont',email:'jean.d@email.fr',items:[{name:'Smartwatch Pro',qty:1,price:89.99}],total:89.99,status:'delivered'},
+            {id:10283,date:'2025-02-03',customer:'Marie Martin',email:'marie.m@email.fr',items:[{name:'Écouteurs Bluetooth',qty:2,price:49.99}],total:99.98,status:'shipped'},
+            {id:10282,date:'2025-02-02',customer:'Pierre Leroy',email:'pierre.l@email.fr',items:[{name:'T-Shirt Premium',qty:2,price:24.99},{name:'Bouteille',qty:1,price:19.99}],total:69.97,status:'processing'},
+            {id:10281,date:'2025-02-02',customer:'Sophie Dubois',email:'sophie.d@email.fr',items:[{name:'Lampe LED',qty:1,price:34.99}],total:34.99,status:'pending'},
+            {id:10280,date:'2025-02-01',customer:'Luc Bernard',email:'luc.b@email.fr',items:[{name:'Smartwatch',qty:1,price:89.99}],total:89.99,status:'delivered'}
+        ];
+        localStorage.setItem('adminOrders', JSON.stringify(orders));
+    }
+
+    function renderOrders() {
+        const tbody = document.getElementById('ordersTableBody');
+        const searchTerm = document.getElementById('orderSearch').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value;
+
+        const filtered = orders.filter(o => {
+            const matchSearch = o.id.toString().includes(searchTerm) || o.customer.toLowerCase().includes(searchTerm);
+            const matchStatus = statusFilter === 'all' || o.status === statusFilter;
+            return matchSearch && matchStatus;
+        });
+
+        tbody.innerHTML = filtered.map(o => `
+            <tr>
+                <td><strong>#${o.id}</strong></td>
+                <td>${o.date}</td>
+                <td>${o.customer}</td>
+                <td>${o.items.length} article(s)</td>
+                <td><strong>${o.total.toFixed(2)}€</strong></td>
+                <td>${getStatusBadge(o.status)}</td>
+                <td>
+                    <button class="btn-icon-admin" onclick="viewOrder(${o.id})" title="Voir détails">👁️</button>
+                    <button class="btn-icon-admin" onclick="updateStatus(${o.id})" title="Changer statut">🔄</button>
+                </td>
+            </tr>
+        `).join('');
+
+        updateStats();
+    }
+
+    function getStatusBadge(status) {
+        const badges = {
+            'pending': '<span class="badge-warning">En attente</span>',
+            'processing': '<span class="badge-info">En préparation</span>',
+            'shipped': '<span class="badge-primary">Expédiée</span>',
+            'delivered': '<span class="badge-success">Livrée</span>',
+            'cancelled': '<span class="badge-danger">Annulée</span>'
+        };
+        return badges[status] || status;
+    }
+
+    function updateStats() {
+        document.getElementById('totalOrders').textContent = orders.length;
+        const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+        document.getElementById('totalRevenue').textContent = totalRevenue.toFixed(2) + '€';
+    }
+
+    function filterOrders() {
+        renderOrders();
+    }
+
+    function viewOrder(id) {
+        const order = orders.find(o => o.id === id);
+        if (!order) return;
+
+        const detailsHtml = `
+            <h2>Commande #${order.id}</h2>
+            <div class="order-details-section">
+                <h3>Informations client</h3>
+                <p><strong>Nom :</strong> ${order.customer}</p>
+                <p><strong>Email :</strong> ${order.email}</p>
+                <p><strong>Date :</strong> ${order.date}</p>
+                <p><strong>Statut :</strong> ${getStatusBadge(order.status)}</p>
+            </div>
+            <div class="order-details-section">
+                <h3>Articles commandés</h3>
+                <table class="order-items-table">
+                    <thead>
+                        <tr>
+                            <th>Article</th>
+                            <th>Qté</th>
+                            <th>Prix unit.</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${order.items.map(item => `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.qty}</td>
+                                <td>${item.price.toFixed(2)}€</td>
+                                <td><strong>${(item.qty * item.price).toFixed(2)}€</strong></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+            <div class="order-total-section">
+                <p><strong>Total commande : ${order.total.toFixed(2)}€</strong></p>
+            </div>
+        `;
+
+        document.getElementById('orderDetailsBody').innerHTML = detailsHtml;
+        document.getElementById('orderModal').classList.add('active');
+    }
+
+    function updateStatus(id) {
+        const order = orders.find(o => o.id === id);
+        if (!order) return;
+
+        const statuses = ['pending', 'processing', 'shipped', 'delivered'];
+        const currentIndex = statuses.indexOf(order.status);
+        const nextStatus = statuses[(currentIndex + 1) % statuses.length];
+
+        order.status = nextStatus;
+        localStorage.setItem('adminOrders', JSON.stringify(orders));
+        renderOrders();
+        alert(`✅ Statut mis à jour : ${nextStatus}`);
+    }
+
+    function closeOrderModal() {
+        document.getElementById('orderModal').classList.remove('active');
+    }
+
+    function logout() {
+        localStorage.removeItem('adminAuth');
+        window.location.href = 'admin-login.html';
+    }
+
+    renderOrders();
+    </script>
+</body>
+</html>

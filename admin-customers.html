@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Clients - Admin Nexio</title>
+    <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🛍️ Nexio Admin</div>
+            <nav class="admin-nav">
+                <a href="admin-dashboard.html" class="admin-nav-link">📊 Tableau de bord</a>
+                <a href="admin-products.html" class="admin-nav-link">📦 Produits</a>
+                <a href="admin-orders.html" class="admin-nav-link">📋 Commandes</a>
+                <a href="admin-customers.html" class="admin-nav-link active">👥 Clients</a>
+                <a href="admin-settings.html" class="admin-nav-link">⚙️ Paramètres</a>
+            </nav>
+            <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Gestion des Clients</h1>
+                <div class="admin-stats-mini">
+                    <div class="stat-mini">
+                        <span>Total clients</span>
+                        <strong id="totalCustomers">0</strong>
+                    </div>
+                    <div class="stat-mini">
+                        <span>Nouveaux ce mois</span>
+                        <strong id="newCustomers">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="admin-toolbar">
+                    <input type="text" placeholder="Rechercher un client..." class="search-input-admin" id="customerSearch" oninput="filterCustomers()">
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Inscription</th>
+                            <th>Commandes</th>
+                            <th>Total dépensé</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersTableBody"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    if (!localStorage.getItem('adminAuth')) {
+        window.location.href = 'admin-login.html';
+    }
+
+    let customers = [
+        {id:1,name:'Jean Dupont',email:'jean.d@email.fr',phone:'06 12 34 56 78',registerDate:'2025-01-15',orders:5,totalSpent:447.95},
+        {id:2,name:'Marie Martin',email:'marie.m@email.fr',phone:'06 23 45 67 89',registerDate:'2025-01-20',orders:3,totalSpent:234.97},
+        {id:3,name:'Pierre Leroy',email:'pierre.l@email.fr',phone:'06 34 56 78 90',registerDate:'2025-01-25',orders:2,totalSpent:159.98},
+        {id:4,name:'Sophie Dubois',email:'sophie.d@email.fr',phone:'06 45 67 89 01',registerDate:'2025-02-01',orders:1,totalSpent:34.99},
+        {id:5,name:'Luc Bernard',email:'luc.b@email.fr',phone:'06 56 78 90 12',registerDate:'2025-02-02',orders:4,totalSpent:379.96}
+    ];
+
+    function renderCustomers() {
+        const tbody = document.getElementById('customersTableBody');
+        const searchTerm = document.getElementById('customerSearch').value.toLowerCase();
+
+        const filtered = customers.filter(c => 
+            c.name.toLowerCase().includes(searchTerm) || 
+            c.email.toLowerCase().includes(searchTerm)
+        );
+
+        tbody.innerHTML = filtered.map(c => `
+            <tr>
+                <td>#${c.id}</td>
+                <td><strong>${c.name}</strong></td>
+                <td>${c.email}</td>
+                <td>${c.phone}</td>
+                <td>${c.registerDate}</td>
+                <td>${c.orders}</td>
+                <td><strong>${c.totalSpent.toFixed(2)}€</strong></td>
+                <td>
+                    <button class="btn-icon-admin" onclick="viewCustomer(${c.id})" title="Voir détails">👁️</button>
+                    <button class="btn-icon-admin" onclick="alert('Envoyer email')" title="Contacter">📧</button>
+                </td>
+            </tr>
+        `).join('');
+
+        updateStats();
+    }
+
+    function updateStats() {
+        document.getElementById('totalCustomers').textContent = customers.length;
+        const newThisMonth = customers.filter(c => c.registerDate.startsWith('2025-02')).length;
+        document.getElementById('newCustomers').textContent = newThisMonth;
+    }
+
+    function filterCustomers() {
+        renderCustomers();
+    }
+
+    function viewCustomer(id) {
+        const customer = customers.find(c => c.id === id);
+        if (customer) {
+            alert(`Client: ${customer.name}\nEmail: ${customer.email}\nCommandes: ${customer.orders}\nDépenses: ${customer.totalSpent.toFixed(2)}€`);
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('adminAuth');
+        window.location.href = 'admin-login.html';
+    }
+
+    renderCustomers();
+    </script>
+</body>
+</html>
