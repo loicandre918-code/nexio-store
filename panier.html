@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panier – Nexio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --neon:#00ffff;
+    --violet:#8b5cf6;
+    --bg:#020617;
+    --bg-card:rgba(15,23,42,.75);
+    --border:rgba(255,255,255,.08);
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:radial-gradient(circle at top,#020617,#000);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+}
+
+/* HEADER */
+header{
+    position:sticky;
+    top:0;
+    backdrop-filter:blur(12px);
+    background:rgba(2,6,23,.7);
+    border-bottom:1px solid var(--border);
+}
+.header{
+    max-width:1400px;
+    margin:auto;
+    padding:1rem 2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.6rem;
+    font-weight:800;
+    background:linear-gradient(90deg,var(--neon),var(--violet));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+nav{
+    display:flex;
+    gap:2rem;
+}
+nav a{
+    color:var(--muted);
+    text-decoration:none;
+}
+nav a:hover{color:var(--neon)}
+.btn-cart{
+    padding:.6rem 1.2rem;
+    border-radius:10px;
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    color:#000;
+    font-weight:700;
+    text-decoration:none;
+}
+
+/* PAGE */
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:4rem 2rem;
+}
+.section h1{
+    text-align:center;
+    font-family:'Orbitron',sans-serif;
+    margin-bottom:3rem;
+}
+
+/* PANIER */
+.cart{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:2rem;
+}
+
+/* LISTE PRODUITS */
+.cart-items{
+    display:flex;
+    flex-direction:column;
+    gap:1.5rem;
+}
+.cart-item{
+    background:var(--bg-card);
+    backdrop-filter:blur(14px);
+    border-radius:18px;
+    border:1px solid var(--border);
+    padding:1.2rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    transition:.3s;
+}
+.cart-item:hover{
+    box-shadow:0 0 30px #00ffff33;
+}
+.item-left{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+}
+.item-img{
+    width:70px;
+    height:70px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#020617,#020617);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2rem;
+}
+.item-info h3{
+    font-size:1rem;
+}
+.item-info p{
+    font-size:.85rem;
+    color:var(--muted);
+}
+
+/* QUANTITÉ */
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+}
+.quantity button{
+    width:32px;
+    height:32px;
+    border:none;
+    border-radius:8px;
+    background:var(--bg-card);
+    color:var(--neon);
+    font-size:1.2rem;
+    cursor:pointer;
+}
+.quantity span{
+    min-width:25px;
+    text-align:center;
+}
+
+/* PRIX */
+.price{
+    font-weight:700;
+    color:var(--neon);
+}
+
+/* SUMMARY */
+.cart-summary{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:2rem;
+    height:fit-content;
+}
+.summary-line{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:1rem;
+    color:var(--muted);
+}
+.summary-total{
+    display:flex;
+    justify-content:space-between;
+    font-size:1.4rem;
+    font-weight:800;
+    margin-top:1rem;
+    color:var(--neon);
+}
+.checkout{
+    display:block;
+    text-align:center;
+    margin-top:2rem;
+    padding:1rem;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    color:#000;
+    font-weight:700;
+    text-decoration:none;
+}
+
+/* FOOTER */
+footer{
+    padding:3rem 2rem;
+    text-align:center;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .cart{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header">
+        <div class="logo">NEXIO</div>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="#">Catégories</a>
+            <a href="#">Promotions</a>
+            <a href="#">Contact</a>
+        </nav>
+        <a href="panier.html" class="btn-cart">Panier</a>
+    </div>
+</header>
+
+<section class="section">
+    <h1>Votre Panier</h1>
+
+    <div class="cart">
+        <!-- Produits -->
+        <div class="cart-items">
+
+            <div class="cart-item">
+                <div class="item-left">
+                    <div class="item-img">💻</div>
+                    <div class="item-info">
+                        <h3>Laptop Quantum</h3>
+                        <p>Ultra-performance</p>
+                    </div>
+                </div>
+                <div class="quantity">
+                    <button>-</button>
+                    <span>1</span>
+                    <button>+</button>
+                </div>
+                <div class="price">1200€</div>
+            </div>
+
+            <div class="cart-item">
+                <div class="item-left">
+                    <div class="item-img">🎧</div>
+                    <div class="item-info">
+                        <h3>Casque VR Neo</h3>
+                        <p>Immersion totale</p>
+                    </div>
+                </div>
+                <div class="quantity">
+                    <button>-</button>
+                    <span>1</span>
+                    <button>+</button>
+                </div>
+                <div class="price">400€</div>
+            </div>
+
+        </div>
+
+        <!-- Résumé -->
+        <div class="cart-summary">
+            <div class="summary-line">
+                <span>Sous-total</span>
+                <span>1600€</span>
+            </div>
+            <div class="summary-line">
+                <span>Livraison</span>
+                <span>Gratuite</span>
+            </div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <span>1600€</span>
+            </div>
+
+            <a href="#" class="checkout">Passer au paiement</a>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Nexio — Tous droits réservés</p>
+</footer>
+
+</body>
+</html>
