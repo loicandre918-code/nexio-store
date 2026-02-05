@@ -5,63 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Promotions - Nexio</title>
     <link rel="stylesheet" href="css/store.css">
+
+    <!-- Police moderne -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <header class="store-header">
-        <div class="header-container">
-            <div class="logo" onclick="window.location.href='index.html'">🛍️ Nexio</div>
-            <nav class="main-nav">
-                <a href="index.html" class="nav-link">Boutique</a>
-                <a href="categories.html" class="nav-link">Catégories</a>
-                <a href="promotions.html" class="nav-link active">Promotions</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </nav>
-        </div>
-    </header>
 
-    <div class="page-hero promo-hero">
-        <div class="container">
-            <h1>🔥 Promotions Exclusives</h1>
-            <p>Profitez de nos meilleures offres !</p>
+<!-- HEADER -->
+<header class="store-header">
+    <div class="header-container">
+        <div class="logo" onclick="window.location.href='index.html'">
+            <span class="logo-icon">N</span>
+            <span class="logo-text">Nexio</span>
+        </div>
+
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">Accueil</a>
+            <a href="categories.html" class="nav-link">Catégories</a>
+            <a href="promotions.html" class="nav-link active">Promotions</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- HERO PROMO -->
+<section class="promo-hero-modern">
+    <div class="container">
+        <h1>Offres spéciales</h1>
+        <p>Des réductions exclusives sur nos produits les plus populaires.</p>
+    </div>
+</section>
+
+<!-- CARTES PROMO -->
+<section class="promo-section">
+    <div class="container promo-grid">
+
+        <div class="promo-card">
+            <div class="promo-badge">-30%</div>
+            <h3>Électronique</h3>
+            <p>Sur les écouteurs, montres connectées et accessoires.</p>
+            <span class="promo-date">Jusqu’au 28 février</span>
+            <a href="categories.html" class="btn-primary">Voir l’offre</a>
+        </div>
+
+        <div class="promo-card">
+            <div class="promo-badge">-50%</div>
+            <h3>Mode</h3>
+            <p>Deuxième article à moitié prix.</p>
+            <span class="promo-date">Offre limitée</span>
+            <a href="categories.html" class="btn-primary">Découvrir</a>
+        </div>
+
+        <div class="promo-card">
+            <div class="promo-badge">🚚</div>
+            <h3>Livraison gratuite</h3>
+            <p>Dès 50€ d’achat sur toute la boutique.</p>
+            <span class="promo-date">Partout en France</span>
+            <a href="index.html" class="btn-primary">Commander</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- SECTION APPEL À L’ACTION -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Ne ratez pas nos meilleures offres</h2>
+        <p>Découvrez tous les produits en promotion dès maintenant.</p>
+        <a href="index.html" class="btn-primary-large">Voir les produits</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="store-footer">
+    <div class="container footer-grid">
+        <div>
+            <h3>Nexio</h3>
+            <p>Boutique moderne et sécurisée.</p>
+        </div>
+
+        <div>
+            <h4>Boutique</h4>
+            <a href="index.html">Produits</a>
+            <a href="promotions.html">Promotions</a>
+        </div>
+
+        <div>
+            <h4>Informations</h4>
+            <a href="#">Livraison</a>
+            <a href="#">Retours</a>
+        </div>
+
+        <div>
+            <h4>Contact</h4>
+            <p>contact@nexio.fr</p>
+            <p>Lyon, France</p>
         </div>
     </div>
 
-    <section class="promo-banners">
-        <div class="container">
-            <div class="promo-banner-grid">
-                <div class="promo-banner-card red">
-                    <h2>-30%</h2>
-                    <p>Sur toute l'électronique</p>
-                    <span>Jusqu'au 28 Février</span>
-                </div>
-                <div class="promo-banner-card blue">
-                    <h2>-50%</h2>
-                    <p>Deuxième article</p>
-                    <span>Sur les vêtements</span>
-                </div>
-                <div class="promo-banner-card green">
-                    <h2>Livraison Offerte</h2>
-                    <p>Dès 50€ d'achat</p>
-                    <span>Partout en France</span>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="footer-bottom">
+        <p>© 2026 Nexio. Tous droits réservés.</p>
+    </div>
+</footer>
 
-    <section class="products-section">
-        <div class="container">
-            <h2>Produits en promotion</h2>
-            <p style="text-align:center;color:#666;margin-bottom:2rem;">Retrouvez tous nos produits en promotion sur la page boutique</p>
-            <div style="text-align:center;">
-                <a href="index.html" class="btn-primary-large">Voir tous les produits</a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="store-footer">
-        <div class="container">
-            <p>&copy; 2025 Nexio. Tous droits réservés.</p>
-        </div>
-    </footer>
 </body>
 </html>
