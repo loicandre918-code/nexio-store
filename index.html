@@ -1,209 +1,178 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexio - Boutique Tech</title>
-    <link rel="stylesheet" href="css/store.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site High-Tech Futuriste</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* =========================
+   VARIABLES & RESET
+   ========================= */
+:root{
+    --primary:#00ffff;
+    --primary-dark:#06b6d4;
+    --secondary:#8b5cf6;
+    --success:#10b981;
+    --danger:#ef4444;
+    --warning:#f59e0b;
+    --info:#06b6d4;
+    --bg-dark:#0f172a;
+    --bg-gradient:linear-gradient(135deg,#00f,#8b5cf6);
+    --card-shadow:0 4px 20px rgba(0,255,255,0.1);
+    --card-hover:0 20px 40px rgba(0,255,255,0.2);
+    --text-light:#f8fafc;
+    --text-dark:#e5e7eb;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+body{background:var(--bg-dark);color:var(--text-light);line-height:1.6;min-height:100vh;}
+
+/* =========================
+   CONTAINER
+   ========================= */
+.container{max-width:1400px;margin:0 auto;padding:0 2rem;}
+
+/* =========================
+   HEADER
+   ========================= */
+header{position:sticky;top:0;background:rgba(15,23,42,0.9);backdrop-filter:blur(8px);box-shadow:0 0 10px rgba(0,255,255,0.3);z-index:100}
+.header-container{display:flex;justify-content:space-between;align-items:center;max-width:1400px;margin:0 auto;padding:1rem 2rem;}
+.logo{font-size:1.8rem;font-weight:900;background:linear-gradient(90deg,#00ffff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer;}
+.nav-links{display:flex;gap:2rem;}
+.nav-link{color:var(--text-light);text-decoration:none;font-weight:500;position:relative;transition:0.3s;}
+.nav-link:hover::after,.nav-link.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--primary);border-radius:2px;}
+.nav-link:hover{color:var(--primary);}
+.header-actions{display:flex;gap:1rem;align-items:center;}
+
+/* =========================
+   HERO
+   ========================= */
+.hero{
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    position:relative;
+    padding:100px 20px;
+    text-align:center;
+    overflow:hidden;
+}
+.hero::before{
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle at top left,#00ffff22,#8b5cf622);
+    top:0;left:0;z-index:0;
+}
+.hero-content{position:relative;z-index:1;max-width:700px;margin:auto;}
+.hero h1{font-size:3.5rem;font-weight:900;line-height:1.1;margin-bottom:1rem;text-shadow:0 0 10px #00ffff,0 0 20px #8b5cf6;}
+.hero p{font-size:1.2rem;opacity:0.8;margin-bottom:2rem;}
+.hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn{padding:1rem 2rem;border-radius:12px;font-weight:600;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-block;}
+.btn-primary{background:var(--primary);color:var(--bg-dark);box-shadow:0 0 10px #00ffff,0 0 20px #8b5cf6;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 20px #00ffff,0 0 40px #8b5cf6;}
+.btn-secondary{border:2px solid var(--primary);color:var(--primary);background:none;}
+.btn-secondary:hover{background:var(--primary);color:var(--bg-dark);}
+
+/* =========================
+   PRODUCTS
+   ========================= */
+.products-section{padding:4rem 2rem;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2rem;}
+.product-card{
+    background:rgba(15,23,42,0.8);
+    backdrop-filter:blur(10px);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--card-shadow);
+    transition:all 0.3s;
+    cursor:pointer;
+}
+.product-card:hover{transform:translateY(-8px);box-shadow:var(--card-hover);}
+.product-image{height:200px;background:linear-gradient(135deg,#00ffff,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:3rem;color:#fff;}
+.product-info{padding:1rem;}
+.product-name{font-weight:700;font-size:1.2rem;color:var(--text-light);}
+.product-price{font-weight:800;color:#00ffff;font-size:1.5rem;margin-top:0.5rem;}
+.btn-add-cart{margin-top:0.5rem;display:inline-block;padding:0.5rem 1.5rem;border-radius:12px;background:#00ffff;color:var(--bg-dark);font-weight:600;transition:all 0.3s;}
+.btn-add-cart:hover{transform:scale(1.05);box-shadow:0 0 10px #00ffff,0 0 20px #8b5cf6;}
+
+/* =========================
+   FOOTER
+   ========================= */
+footer{background:#0f172a;color:var(--text-light);padding:3rem 2rem;text-align:center;}
+footer a{color:var(--primary);text-decoration:none;transition:0.3s;}
+footer a:hover{color:#00ffff;}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width:768px){
+    .hero h1{font-size:2.5rem;}
+    .products-grid{grid-template-columns:1fr;}
+    .nav-links{flex-direction:column;gap:1rem;}
+}
+</style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="store-header">
+<header>
     <div class="header-container">
-        <div class="logo">
-            <span class="logo-icon">N</span>
-            <span class="logo-text">Nexio</span>
-        </div>
-
-        <nav class="main-nav">
-            <a href="index.html" class="nav-link active">Accueil</a>
-            <a href="categories.html" class="nav-link">Catégories</a>
-            <a href="promotions.html" class="nav-link">Promotions</a>
-            <a href="contact.html" class="nav-link">Contact</a>
+        <div class="logo">NEXIO</div>
+        <nav class="nav-links">
+            <a href="#" class="nav-link active">Accueil</a>
+            <a href="#" class="nav-link">Produits</a>
+            <a href="#" class="nav-link">Contact</a>
+            <a href="#" class="nav-link">Promo</a>
         </nav>
-
         <div class="header-actions">
-            <button class="icon-btn" onclick="toggleCart()">
-                🛒 <span class="badge" id="cartBadge">0</span>
-            </button>
+            <a href="#" class="btn btn-primary">Panier</a>
         </div>
     </div>
 </header>
 
-<!-- HERO PRINCIPAL -->
-<section class="hero-modern">
-    <div class="container hero-grid">
-        <div class="hero-content">
-            <span class="hero-tag">Nouveautés 2026</span>
-            <h1>La tech du quotidien, au meilleur prix.</h1>
-            <p>Découvrez des produits modernes, fiables et sélectionnés pour améliorer votre quotidien.</p>
-            <div class="hero-buttons">
-                <a href="#products" class="btn-primary">Explorer les produits</a>
-                <a href="promotions.html" class="btn-secondary">Voir les promos</a>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Bienvenue sur Nexio</h1>
+        <p>Découvrez notre site moderne et high-tech, design futuriste et interactif.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn btn-primary">Explorer</a>
+            <a href="#" class="btn btn-secondary">En savoir plus</a>
+        </div>
+    </div>
+</section>
+
+<section class="products-section container">
+    <h2 style="text-align:center;margin-bottom:2rem;">Nos Produits</h2>
+    <div class="products-grid">
+        <div class="product-card">
+            <div class="product-image">💻</div>
+            <div class="product-info">
+                <div class="product-name">Laptop High-Tech</div>
+                <div class="product-price">1200€</div>
+                <a class="btn-add-cart" href="#">Ajouter au panier</a>
             </div>
         </div>
-
-        <div class="hero-visual">
-            <div class="hero-product">
-                <div class="hero-product-icon" style="font-size:60px;">⌚</div>
-                <h3>Smartwatch Pro</h3>
-                <p>Suivi santé & autonomie 7 jours</p>
-                <strong>89,99 €</strong>
+        <div class="product-card">
+            <div class="product-image">🖥️</div>
+            <div class="product-info">
+                <div class="product-name">Station de travail</div>
+                <div class="product-price">1500€</div>
+                <a class="btn-add-cart" href="#">Ajouter au panier</a>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-image">🎧</div>
+            <div class="product-info">
+                <div class="product-name">Casque VR</div>
+                <div class="product-price">400€</div>
+                <a class="btn-add-cart" href="#">Ajouter au panier</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CATEGORIES RAPIDES -->
-<section class="categories-home">
-    <div class="container">
-        <h2 class="section-title">Catégories populaires</h2>
-        <div class="categories-grid">
-            <a href="categories.html" class="category-card"><span>📱</span><h3>Électronique</h3></a>
-            <a href="categories.html" class="category-card"><span>👕</span><h3>Vêtements</h3></a>
-            <a href="categories.html" class="category-card"><span>🏠</span><h3>Maison</h3></a>
-            <a href="categories.html" class="category-card"><span>🏋️</span><h3>Sport</h3></a>
-        </div>
-    </div>
-</section>
-
-<!-- PRODUITS POPULAIRES -->
-<section class="products-section" id="products">
-    <div class="container">
-        <h2 class="section-title">Produits populaires</h2>
-        <div class="products-grid" id="productsGrid">
-
-            <!-- Exemple de produit -->
-            <div class="product-card">
-                <div class="product-image">🎧</div>
-                <div class="product-info">
-                    <div class="product-category">Électronique</div>
-                    <div class="product-name">Casque Bluetooth</div>
-                    <div class="product-description">Son immersif et autonomie 40h.</div>
-                    <div class="product-footer">
-                        <div class="product-price">59,99 €</div>
-                        <button class="btn-add-cart">Ajouter</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">📱</div>
-                <div class="product-info">
-                    <div class="product-category">Électronique</div>
-                    <div class="product-name">Smartphone X</div>
-                    <div class="product-description">Écran OLED, 128GB, caméra pro.</div>
-                    <div class="product-footer">
-                        <div class="product-price">699,99 €</div>
-                        <button class="btn-add-cart">Ajouter</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">⌚</div>
-                <div class="product-info">
-                    <div class="product-category">Électronique</div>
-                    <div class="product-name">Smartwatch 2</div>
-                    <div class="product-description">Suivi santé et notifications intelligentes.</div>
-                    <div class="product-footer">
-                        <div class="product-price">129,99 €</div>
-                        <button class="btn-add-cart">Ajouter</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">💻</div>
-                <div class="product-info">
-                    <div class="product-category">Électronique</div>
-                    <div class="product-name">Laptop Pro</div>
-                    <div class="product-description">Performance maximale pour tous vos projets.</div>
-                    <div class="product-footer">
-                        <div class="product-price">1 299,99 €</div>
-                        <button class="btn-add-cart">Ajouter</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- BANDE PROMO -->
-<section class="promo-strip">
-    <div class="container promo-strip-content">
-        <div>
-            <h2>-30% sur l’électronique</h2>
-            <p>Offre limitée jusqu’à fin du mois</p>
-        </div>
-        <a href="promotions.html" class="btn-primary">Voir l’offre</a>
-    </div>
-</section>
-
-<!-- AVANTAGES -->
-<section class="features-section">
-    <div class="container features-grid">
-        <div class="feature-item"><span>🚚</span><h3>Livraison rapide</h3><p>Gratuite dès 50€</p></div>
-        <div class="feature-item"><span>🔒</span><h3>Paiement sécurisé</h3><p>Protection totale</p></div>
-        <div class="feature-item"><span>↩️</span><h3>Retours faciles</h3><p>30 jours</p></div>
-        <div class="feature-item"><span>💬</span><h3>Support client</h3><p>Réponse rapide</p></div>
-    </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section class="newsletter-section">
-    <div class="container newsletter-content">
-        <h2>Recevez nos offres exclusives</h2>
-        <p>Inscrivez-vous pour recevoir nos nouveautés.</p>
-        <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-            <input type="email" placeholder="Votre email" required>
-            <button type="submit">S'inscrire</button>
-        </form>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="store-footer">
-    <div class="container footer-grid">
-        <div>
-            <h3>Nexio</h3>
-            <p>Boutique tech moderne et sécurisée.</p>
-        </div>
-        <div>
-            <h4>Boutique</h4>
-            <a href="index.html">Produits</a>
-            <a href="promotions.html">Promotions</a>
-        </div>
-        <div>
-            <h4>Informations</h4>
-            <a href="#">Livraison</a>
-            <a href="#">Retours</a>
-        </div>
-        <div>
-            <h4>Contact</h4>
-            <p>contact@nexio.fr</p>
-            <p>Lyon, France</p>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>© 2026 Nexio. Tous droits réservés.</p>
-    </div>
+<footer>
+    <p>&copy; 2026 Nexio. Tous droits réservés.</p>
+    <p><a href="#">Politique de confidentialité</a> | <a href="#">Mentions légales</a></p>
 </footer>
 
-<!-- PANIER -->
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header">
-        <h2>Mon Panier</h2>
-        <button onclick="closeCart()">×</button>
-    </div>
-    <div class="cart-items" id="cartItems"></div>
-</div>
-
-<script src="js/store.js"></script>
 </body>
 </html>
