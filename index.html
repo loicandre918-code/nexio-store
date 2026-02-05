@@ -3,233 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexio - Votre Boutique en Ligne</title>
+    <title>Nexio - Boutique moderne</title>
     <link rel="stylesheet" href="css/store.css">
-<link rel="icon" href="data:image/svg+xml,
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-<rect width='100' height='100' rx='20' fill='%236366f1'/>
-<text x='50' y='65' font-size='60' text-anchor='middle' fill='white'>N</text>
-</svg>">
+
+    <!-- Google Font moderne -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+    <rect width='100' height='100' rx='20' fill='%236366f1'/>
+    <text x='50' y='65' font-size='60' text-anchor='middle' fill='white'>N</text>
+    </svg>">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
 <body>
-<div class="logo">
-    <span class="logo-icon">N</span>
-    <span class="logo-text">Nexio</span>
-</div>
 
-            
-            <nav class="main-nav">
-                <a href="index.html" class="nav-link active">Boutique</a>
-                <a href="categories.html" class="nav-link">Catégories</a>
-                <a href="promotions.html" class="nav-link">Promotions</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </nav>
-
-            <div class="header-actions">
-                <div class="search-box">
-                    <input type="text" placeholder="Rechercher..." id="searchInput" oninput="searchProducts()">
-                    <span class="search-icon">🔍</span>
-                </div>
-                
-                <button class="icon-btn" onclick="toggleCart()">
-                    <span class="icon">🛒</span>
-                    <span class="badge" id="cartBadge">0</span>
-                </button>
-
-                <button class="icon-btn admin-btn" onclick="window.location.href='admin-login.html'" title="Admin">
-                    <span class="icon">👤</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Bannière promotionnelle -->
-    <div class="promo-banner">
-        <p>🎉 Livraison GRATUITE dès 50€ d'achat ! 🎉</p>
-    </div>
-
-    <!-- Filtres et catégories -->
-    <section class="filters-section">
-        <div class="container">
-            <div class="filters-bar">
-                <div class="filter-group">
-                    <label>Catégorie :</label>
-                    <select id="categoryFilter" onchange="filterProducts()">
-                        <option value="all">Toutes</option>
-                        <option value="electronique">Électronique</option>
-                        <option value="vetements">Vêtements</option>
-                        <option value="maison">Maison & Déco</option>
-                        <option value="sport">Sport & Fitness</option>
-                        <option value="beaute">Beauté & Santé</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label>Trier par :</label>
-                    <select id="sortFilter" onchange="filterProducts()">
-                        <option value="featured">Recommandés</option>
-                        <option value="price-asc">Prix croissant</option>
-                        <option value="price-desc">Prix décroissant</option>
-                        <option value="name">Nom A-Z</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label>Prix max :</label>
-                    <input type="number" id="priceFilter" placeholder="€" onchange="filterProducts()">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Grille de produits -->
-    <section class="products-section">
-        <div class="container">
-            <h1 class="section-title">Nos Produits</h1>
-            <div class="products-grid" id="productsGrid"></div>
-        </div>
-    </section>
-
-    <!-- Panier coulissant -->
-    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h2>Mon Panier</h2>
-            <button class="close-btn" onclick="closeCart()">×</button>
+<!-- HEADER -->
+<header class="store-header">
+    <div class="header-container">
+        <div class="logo">
+            <span class="logo-icon">N</span>
+            <span class="logo-text">Nexio</span>
         </div>
 
-        <div class="cart-items" id="cartItems"></div>
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link active">Accueil</a>
+            <a href="categories.html" class="nav-link">Catégories</a>
+            <a href="promotions.html" class="nav-link">Promotions</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
 
-        <div class="cart-footer">
-            <div class="cart-summary">
-                <div class="summary-row">
-                    <span>Sous-total :</span>
-                    <span id="cartSubtotal">0.00 €</span>
-                </div>
-                <div class="summary-row">
-                    <span>Livraison :</span>
-                    <span id="cartShipping">GRATUIT</span>
-                </div>
-                <div class="summary-row total">
-                    <span>Total :</span>
-                    <span id="cartTotal">0.00 €</span>
-                </div>
-            </div>
-            
-            <button class="btn-checkout" onclick="goToCheckout()">
-                Commander <span>→</span>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleCart()">
+                🛒 <span class="badge" id="cartBadge">0</span>
             </button>
         </div>
     </div>
+</header>
 
-    <!-- Section Avantages -->
-    <section class="features-section">
-        <div class="container">
-            <div class="features-grid">
-                <div class="feature-item">
-                    <span class="feature-icon">🚚</span>
-                    <h3>Livraison Rapide</h3>
-                    <p>Livraison gratuite dès 50€</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">🔒</span>
-                    <h3>Paiement Sécurisé</h3>
-                    <p>Vos données sont protégées</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">↩️</span>
-                    <h3>Retours Faciles</h3>
-                    <p>30 jours pour changer d'avis</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">💬</span>
-                    <h3>Support 7j/7</h3>
-                    <p>Service client disponible</p>
-                </div>
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="container hero-container">
+        <div class="hero-text">
+            <h1>Découvrez la nouvelle génération de shopping</h1>
+            <p>Produits tendances, livraison rapide et paiement sécurisé.</p>
+            <a href="#products" class="btn-primary">Voir les produits</a>
+        </div>
+
+        <div class="hero-image">
+            <div class="hero-card">
+                <span>⭐ Produit populaire</span>
+                <h3>Casque Bluetooth</h3>
+                <p>Son immersif, autonomie 40h</p>
+                <strong>59,99 €</strong>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Newsletter -->
-    <section class="newsletter-section">
-        <div class="container">
-            <div class="newsletter-content">
-                <h2>Restez informé de nos nouveautés</h2>
-                <p>Inscrivez-vous à notre newsletter pour recevoir nos offres exclusives</p>
-                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" placeholder="Votre email" required>
-                    <button type="submit">S'inscrire</button>
-                </form>
-            </div>
+<!-- AVANTAGES -->
+<section class="features-section">
+    <div class="container features-grid">
+        <div class="feature-item">
+            <span>🚚</span>
+            <h3>Livraison rapide</h3>
+            <p>Gratuite dès 50€</p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="store-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>🛍️ Nexio</h3>
-                    <p>Votre boutique en ligne de confiance pour tous vos achats.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">📘</a>
-                        <a href="#" class="social-link">📷</a>
-                        <a href="#" class="social-link">🐦</a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Boutique</h4>
-                    <ul>
-                        <li><a href="index.html">Tous les produits</a></li>
-                        <li><a href="categories.html">Catégories</a></li>
-                        <li><a href="promotions.html">Promotions</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Informations</h4>
-                    <ul>
-                        <li><a href="about.html">À propos</a></li>
-                        <li><a href="shipping.html">Livraison</a></li>
-                        <li><a href="returns.html">Retours</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <ul>
-                        <li>📧 contact@nexio.fr</li>
-                        <li>📞 07 68 44 40 51</li>
-                        <li>📍 Lyon, France</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Nexio. Tous droits réservés.</p>
-                <div class="footer-links">
-                    <a href="cgv.html">CGV</a>
-                    <a href="legal.html">Mentions légales</a>
-                    <a href="privacy.html">Confidentialité</a>
-                </div>
-            </div>
+        <div class="feature-item">
+            <span>🔒</span>
+            <h3>Paiement sécurisé</h3>
+            <p>Protection totale</p>
         </div>
-    </footer>
+        <div class="feature-item">
+            <span>↩️</span>
+            <h3>Retours faciles</h3>
+            <p>30 jours</p>
+        </div>
+        <div class="feature-item">
+            <span>💬</span>
+            <h3>Support 7j/7</h3>
+            <p>Service client</p>
+        </div>
+    </div>
+</section>
 
-    <!-- Modal Produit -->
-    <div class="modal" id="productModal">
-        <div class="modal-overlay" onclick="closeProductModal()"></div>
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeProductModal()">×</button>
-            <div class="modal-body" id="productModalBody"></div>
+<!-- PRODUITS -->
+<section class="products-section" id="products">
+    <div class="container">
+        <h2 class="section-title">Produits populaires</h2>
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+    <div class="container newsletter-content">
+        <h2>Recevez nos offres exclusives</h2>
+        <p>Inscrivez-vous à la newsletter Nexio</p>
+        <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" placeholder="Votre email" required>
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="store-footer">
+    <div class="container footer-grid">
+        <div>
+            <h3>Nexio</h3>
+            <p>Votre boutique moderne et fiable.</p>
+        </div>
+
+        <div>
+            <h4>Boutique</h4>
+            <a href="#">Produits</a>
+            <a href="#">Promotions</a>
+        </div>
+
+        <div>
+            <h4>Informations</h4>
+            <a href="#">À propos</a>
+            <a href="#">Livraison</a>
+        </div>
+
+        <div>
+            <h4>Contact</h4>
+            <p>contact@nexio.fr</p>
+            <p>Lyon, France</p>
         </div>
     </div>
 
-    <!-- Notification Toast -->
-    <div class="toast" id="toast"></div>
+    <div class="footer-bottom">
+        <p>© 2026 Nexio. Tous droits réservés.</p>
+    </div>
+</footer>
 
-    <script src="js/store.js"></script>
+<!-- PANIER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h2>Mon Panier</hh2>
+        <button onclick="closeCart()">×</button>
+    </div>
+    <div id="cartItems"></div>
+</div>
+
+<script src="js/store.js"></script>
 </body>
 </html>
