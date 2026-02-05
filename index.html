@@ -5,15 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexio - Boutique Tech</title>
     <link rel="stylesheet" href="css/store.css">
-
-    <!-- Police moderne -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
+    <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body>
 
@@ -46,10 +39,7 @@
         <div class="hero-content">
             <span class="hero-tag">Nouveautés 2026</span>
             <h1>La tech du quotidien, au meilleur prix.</h1>
-            <p>
-                Découvrez des produits modernes, fiables et sélectionnés
-                pour améliorer votre quotidien.
-            </p>
+            <p>Découvrez des produits modernes, fiables et sélectionnés pour améliorer votre quotidien.</p>
             <div class="hero-buttons">
                 <a href="#products" class="btn-primary">Explorer les produits</a>
                 <a href="promotions.html" class="btn-secondary">Voir les promos</a>
@@ -58,7 +48,7 @@
 
         <div class="hero-visual">
             <div class="hero-product">
-                <div class="hero-product-icon">⌚</div>
+                <div class="hero-product-icon" style="font-size:60px;">⌚</div>
                 <h3>Smartwatch Pro</h3>
                 <p>Suivi santé & autonomie 7 jours</p>
                 <strong>89,99 €</strong>
@@ -71,36 +61,75 @@
 <section class="categories-home">
     <div class="container">
         <h2 class="section-title">Catégories populaires</h2>
-
         <div class="categories-grid">
-            <a href="categories.html" class="category-card">
-                <span>📱</span>
-                <h3>Électronique</h3>
-            </a>
-
-            <a href="categories.html" class="category-card">
-                <span>👕</span>
-                <h3>Vêtements</h3>
-            </a>
-
-            <a href="categories.html" class="category-card">
-                <span>🏠</span>
-                <h3>Maison</h3>
-            </a>
-
-            <a href="categories.html" class="category-card">
-                <span>🏋️</span>
-                <h3>Sport</h3>
-            </a>
+            <a href="categories.html" class="category-card"><span>📱</span><h3>Électronique</h3></a>
+            <a href="categories.html" class="category-card"><span>👕</span><h3>Vêtements</h3></a>
+            <a href="categories.html" class="category-card"><span>🏠</span><h3>Maison</h3></a>
+            <a href="categories.html" class="category-card"><span>🏋️</span><h3>Sport</h3></a>
         </div>
     </div>
 </section>
 
-<!-- PRODUITS -->
+<!-- PRODUITS POPULAIRES -->
 <section class="products-section" id="products">
     <div class="container">
         <h2 class="section-title">Produits populaires</h2>
-        <div class="products-grid" id="productsGrid"></div>
+        <div class="products-grid" id="productsGrid">
+
+            <!-- Exemple de produit -->
+            <div class="product-card">
+                <div class="product-image">🎧</div>
+                <div class="product-info">
+                    <div class="product-category">Électronique</div>
+                    <div class="product-name">Casque Bluetooth</div>
+                    <div class="product-description">Son immersif et autonomie 40h.</div>
+                    <div class="product-footer">
+                        <div class="product-price">59,99 €</div>
+                        <button class="btn-add-cart">Ajouter</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">📱</div>
+                <div class="product-info">
+                    <div class="product-category">Électronique</div>
+                    <div class="product-name">Smartphone X</div>
+                    <div class="product-description">Écran OLED, 128GB, caméra pro.</div>
+                    <div class="product-footer">
+                        <div class="product-price">699,99 €</div>
+                        <button class="btn-add-cart">Ajouter</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">⌚</div>
+                <div class="product-info">
+                    <div class="product-category">Électronique</div>
+                    <div class="product-name">Smartwatch 2</div>
+                    <div class="product-description">Suivi santé et notifications intelligentes.</div>
+                    <div class="product-footer">
+                        <div class="product-price">129,99 €</div>
+                        <button class="btn-add-cart">Ajouter</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">💻</div>
+                <div class="product-info">
+                    <div class="product-category">Électronique</div>
+                    <div class="product-name">Laptop Pro</div>
+                    <div class="product-description">Performance maximale pour tous vos projets.</div>
+                    <div class="product-footer">
+                        <div class="product-price">1 299,99 €</div>
+                        <button class="btn-add-cart">Ajouter</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </section>
 
@@ -118,26 +147,10 @@
 <!-- AVANTAGES -->
 <section class="features-section">
     <div class="container features-grid">
-        <div class="feature-item">
-            <span>🚚</span>
-            <h3>Livraison rapide</h3>
-            <p>Gratuite dès 50€</p>
-        </div>
-        <div class="feature-item">
-            <span>🔒</span>
-            <h3>Paiement sécurisé</h3>
-            <p>Protection totale</p>
-        </div>
-        <div class="feature-item">
-            <span>↩️</span>
-            <h3>Retours faciles</h3>
-            <p>30 jours</p>
-        </div>
-        <div class="feature-item">
-            <span>💬</span>
-            <h3>Support client</h3>
-            <p>Réponse rapide</p>
-        </div>
+        <div class="feature-item"><span>🚚</span><h3>Livraison rapide</h3><p>Gratuite dès 50€</p></div>
+        <div class="feature-item"><span>🔒</span><h3>Paiement sécurisé</h3><p>Protection totale</p></div>
+        <div class="feature-item"><span>↩️</span><h3>Retours faciles</h3><p>30 jours</p></div>
+        <div class="feature-item"><span>💬</span><h3>Support client</h3><p>Réponse rapide</p></div>
     </div>
 </section>
 
@@ -160,26 +173,22 @@
             <h3>Nexio</h3>
             <p>Boutique tech moderne et sécurisée.</p>
         </div>
-
         <div>
             <h4>Boutique</h4>
             <a href="index.html">Produits</a>
             <a href="promotions.html">Promotions</a>
         </div>
-
         <div>
             <h4>Informations</h4>
             <a href="#">Livraison</a>
             <a href="#">Retours</a>
         </div>
-
         <div>
             <h4>Contact</h4>
             <p>contact@nexio.fr</p>
             <p>Lyon, France</p>
         </div>
     </div>
-
     <div class="footer-bottom">
         <p>© 2026 Nexio. Tous droits réservés.</p>
     </div>
@@ -192,7 +201,7 @@
         <h2>Mon Panier</h2>
         <button onclick="closeCart()">×</button>
     </div>
-    <div id="cartItems"></div>
+    <div class="cart-items" id="cartItems"></div>
 </div>
 
 <script src="js/store.js"></script>
