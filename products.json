@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Laptop Quantum",
+    "price": 1200,
+    "category": "ordinateurs",
+    "emoji": "💻"
+  },
+  {
+    "id": 2,
+    "name": "Station Pro X",
+    "price": 1500,
+    "category": "ordinateurs",
+    "emoji": "🖥️"
+  },
+  {
+    "id": 3,
+    "name": "Smartphone Ultra",
+    "price": 999,
+    "category": "smartphones",
+    "emoji": "📱"
+  },
+  {
+    "id": 4,
+    "name": "Casque VR Neo",
+    "price": 400,
+    "category": "vr",
+    "emoji": "🎧"
+  },
+  {
+    "id": 5,
+    "name": "Smartwatch X",
+    "price": 250,
+    "category": "wearables",
+    "emoji": "⌚"
+  }
+]

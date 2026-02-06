@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catégories – Nexio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --neon:#00ffff;
+    --violet:#8b5cf6;
+    --bg:#020617;
+    --bg-card:rgba(15,23,42,.75);
+    --border:rgba(255,255,255,.08);
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:radial-gradient(circle at top,#020617,#000);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+}
+
+/* HEADER */
+header{
+    backdrop-filter:blur(12px);
+    background:rgba(2,6,23,.7);
+    border-bottom:1px solid var(--border);
+}
+.header{
+    max-width:1400px;
+    margin:auto;
+    padding:1rem 2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.6rem;
+    font-weight:800;
+    background:linear-gradient(90deg,var(--neon),var(--violet));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+nav{
+    display:flex;
+    gap:2rem;
+}
+nav a{
+    color:var(--muted);
+    text-decoration:none;
+}
+nav a.active,
+nav a:hover{color:var(--neon)}
+
+/* PAGE */
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:4rem 2rem;
+    text-align:center;
+}
+.section h1{
+    font-family:'Orbitron',sans-serif;
+    margin-bottom:3rem;
+}
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:2rem;
+}
+.category{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:2rem;
+    transition:.3s;
+}
+.category:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px #00ffff33;
+}
+.category-icon{
+    font-size:3rem;
+    margin-bottom:1rem;
+}
+.category h3{
+    margin-bottom:.5rem;
+}
+.category p{
+    color:var(--muted);
+    font-size:.9rem;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header">
+        <div class="logo">NEXIO</div>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="categories.html" class="active">Catégories</a>
+            <a href="promotions.html">Promotions</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<section class="section">
+    <h1>Nos Catégories</h1>
+
+    <div class="categories">
+        <div class="category">
+            <div class="category-icon">💻</div>
+            <h3>Ordinateurs</h3>
+            <p>PC portables et stations puissantes.</p>
+        </div>
+
+        <div class="category">
+            <div class="category-icon">📱</div>
+            <h3>Smartphones</h3>
+            <p>Les dernières technologies mobiles.</p>
+        </div>
+
+        <div class="category">
+            <div class="category-icon">🎧</div>
+            <h3>Audio & VR</h3>
+            <p>Casques, écouteurs et réalité virtuelle.</p>
+        </div>
+
+        <div class="category">
+            <div class="category-icon">⌚</div>
+            <h3>Wearables</h3>
+            <p>Montres connectées et gadgets.</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

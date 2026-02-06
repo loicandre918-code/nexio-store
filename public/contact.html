@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact – Nexio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --neon:#00ffff;
+    --violet:#8b5cf6;
+    --bg:#020617;
+    --bg-card:rgba(15,23,42,.75);
+    --border:rgba(255,255,255,.08);
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:radial-gradient(circle at top,#020617,#000);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+}
+
+.section{
+    max-width:600px;
+    margin:auto;
+    padding:4rem 2rem;
+}
+.section h1{
+    text-align:center;
+    font-family:'Orbitron',sans-serif;
+    margin-bottom:2rem;
+}
+
+form{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:2rem;
+}
+form input,
+form textarea{
+    width:100%;
+    margin-bottom:1rem;
+    padding:.8rem;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:#020617;
+    color:var(--text);
+}
+button{
+    width:100%;
+    padding:1rem;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    color:#000;
+    font-weight:700;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<section class="section">
+    <h1>Contact</h1>
+
+    <form>
+        <input type="text" placeholder="Nom" required>
+        <input type="email" placeholder="Email" required>
+        <textarea rows="5" placeholder="Votre message" required></textarea>
+        <button type="submit">Envoyer le message</button>
+    </form>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paiement Réussi – Nexio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --neon:#00ffff;
+    --violet:#8b5cf6;
+    --bg:#020617;
+    --bg-card:rgba(15,23,42,.75);
+    --border:rgba(255,255,255,.08);
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:radial-gradient(circle at top,#020617,#000);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* HEADER */
+header{
+    padding:1rem 2rem;
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(10px);
+    background:rgba(2,6,23,.8);
+}
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.6rem;
+    font-weight:800;
+    background:linear-gradient(90deg,var(--neon),var(--violet));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+}
+
+/* CONTAINER */
+.container{
+    max-width:700px;
+    margin:auto;
+    padding:4rem 2rem;
+    text-align:center;
+    flex:1;
+}
+
+/* SUCCESS ICON */
+.success-icon{
+    width:140px;
+    height:140px;
+    margin:0 auto 2rem;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:5rem;
+    animation:scale-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow:0 0 60px rgba(0,255,255,0.5);
+    position:relative;
+}
+
+.success-icon::before{
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    animation:pulse-ring 2s infinite;
+    z-index:-1;
+}
+
+@keyframes scale-in{
+    0%{
+        transform:scale(0) rotate(-180deg);
+        opacity:0;
+    }
+    100%{
+        transform:scale(1) rotate(0deg);
+        opacity:1;
+    }
+}
+
+@keyframes pulse-ring{
+    0%{
+        transform:scale(1);
+        opacity:0.5;
+    }
+    50%{
+        transform:scale(1.15);
+        opacity:0.3;
+    }
+    100%{
+        transform:scale(1.3);
+        opacity:0;
+    }
+}
+
+/* TEXT */
+h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:2.8rem;
+    margin-bottom:1rem;
+    background:linear-gradient(90deg,var(--neon),var(--violet));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    animation:fade-in 0.8s ease 0.3s backwards;
+}
+
+.subtitle{
+    color:var(--muted);
+    font-size:1.2rem;
+    line-height:1.8;
+    margin-bottom:2.5rem;
+    animation:fade-in 0.8s ease 0.5s backwards;
+}
+
+@keyframes fade-in{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* INFO BOX */
+.info-box{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:2.5rem;
+    margin:2.5rem 0;
+    text-align:left;
+    animation:fade-in 0.8s ease 0.7s backwards;
+    transition:all 0.3s;
+}
+
+.info-box:hover{
+    border-color:var(--neon);
+    box-shadow:0 0 30px rgba(0,255,255,0.1);
+}
+
+.info-box h2{
+    font-family:'Orbitron',sans-serif;
+    color:var(--neon);
+    margin-bottom:1.5rem;
+    font-size:1.3rem;
+}
+
+.info-line{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1rem 0;
+    border-bottom:1px solid var(--border);
+}
+
+.info-line:last-child{
+    border-bottom:none;
+}
+
+.info-label{
+    color:var(--muted);
+    font-size:0.95rem;
+}
+
+.info-value{
+    color:var(--neon);
+    font-weight:600;
+    font-size:1rem;
+}
+
+.loading-indicator{
+    color:var(--muted);
+    font-style:italic;
+    padding:2rem;
+    text-align:center;
+}
+
+.loading-indicator::after{
+    content:'...';
+    animation:dots 1.5s infinite;
+}
+
+@keyframes dots{
+    0%, 20%{content:'.';}
+    40%{content:'..';}
+    60%, 100%{content:'...';}
+}
+
+/* BUTTONS */
+.actions{
+    display:flex;
+    gap:1rem;
+    justify-content:center;
+    margin-top:2.5rem;
+    flex-wrap:wrap;
+    animation:fade-in 0.8s ease 0.9s backwards;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:1rem 2rem;
+    border:none;
+    border-radius:14px;
+    font-weight:700;
+    text-decoration:none;
+    cursor:pointer;
+    transition:all 0.3s;
+    font-size:1rem;
+    font-family:'Inter',sans-serif;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    color:#000;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 35px rgba(0,255,255,0.4);
+}
+
+.btn-secondary{
+    background:var(--bg-card);
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.btn-secondary:hover{
+    border-color:var(--neon);
+    background:rgba(0,255,255,0.05);
+    transform:translateY(-3px);
+}
+
+/* CONFETTI ANIMATION */
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    background:var(--neon);
+    position:absolute;
+    animation:confetti-fall 3s linear;
+}
+
+@keyframes confetti-fall{
+    to{
+        transform:translateY(100vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* ERROR STATE */
+.error-box{
+    background:rgba(239,68,68,0.1);
+    border:1px solid #ef4444;
+    border-radius:20px;
+    padding:2rem;
+    color:#ef4444;
+    margin:2rem 0;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+    h1{
+        font-size:2rem;
+    }
+    .success-icon{
+        width:100px;
+        height:100px;
+        font-size:3.5rem;
+    }
+    .actions{
+        flex-direction:column;
+    }
+    .btn{
+        width:100%;
+        justify-content:center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">NEXIO</div>
+</header>
+
+<div class="container">
+    <div class="success-icon">✓</div>
+    
+    <h1>Paiement Réussi !</h1>
+    
+    <p class="subtitle">
+        Merci pour votre commande ! Vous allez recevoir un email de confirmation 
+        avec tous les détails de votre achat.
+    </p>
+
+    <div class="info-box" id="order-info">
+        <div class="loading-indicator">Chargement des informations de commande</div>
+    </div>
+
+    <div class="actions">
+        <a href="index.html" class="btn btn-primary">
+            🏠 Retour à la boutique
+        </a>
+        <a href="panier.html" class="btn btn-secondary">
+            🛒 Voir le panier
+        </a>
+    </div>
+</div>
+
+<script>
+// Récupérer l'ID de session depuis l'URL
+const urlParams = new URLSearchParams(window.location.search);
+const sessionId = urlParams.get('session_id');
+
+// Créer des confettis
+function createConfetti() {
+    const colors = ['#00ffff', '#8b5cf6', '#10b981', '#f59e0b'];
+    for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDelay = Math.random() * 2 + 's';
+            confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 5000);
+        }, i * 30);
+    }
+}
+
+// Charger les informations de la commande
+async function loadOrderInfo() {
+    const container = document.getElementById('order-info');
+    
+    if (!sessionId) {
+        container.innerHTML = `
+            <div class="error-box">
+                <h2 style="color:#ef4444;margin-bottom:1rem;">⚠️ Aucune session trouvée</h2>
+                <p>Impossible de récupérer les informations de commande.</p>
+            </div>
+        `;
+        return;
+    }
+
+    try {
+        const res = await fetch(`http://localhost:4242/payment-status/${sessionId}`);
+        
+        if (!res.ok) {
+            throw new Error('Impossible de récupérer les informations');
+        }
+        
+        const data = await res.json();
+
+        // Afficher les informations
+        container.innerHTML = `
+            <h2>📋 Détails de la commande</h2>
+            
+            <div class="info-line">
+                <span class="info-label">Statut du paiement</span>
+                <span class="info-value">
+                    ${data.status === 'paid' ? '✅ Payé' : '⏳ En attente'}
+                </span>
+            </div>
+            
+            <div class="info-line">
+                <span class="info-label">Numéro de commande</span>
+                <span class="info-value" style="font-size:0.85rem;">
+                    ${sessionId.substring(0, 24)}...
+                </span>
+            </div>
+            
+            ${data.customer_email ? `
+            <div class="info-line">
+                <span class="info-label">Email de confirmation</span>
+                <span class="info-value">${data.customer_email}</span>
+            </div>
+            ` : ''}
+            
+            <div class="info-line">
+                <span class="info-label">Date</span>
+                <span class="info-value">
+                    ${new Date().toLocaleDateString('fr-FR', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })}
+                </span>
+            </div>
+        `;
+
+        // Vider le panier après confirmation
+        localStorage.removeItem('cart');
+        
+        // Lancer les confettis
+        createConfetti();
+
+    } catch (error) {
+        console.error('Erreur:', error);
+        container.innerHTML = `
+            <div class="error-box">
+                <h2 style="color:#ef4444;margin-bottom:1rem;">❌ Erreur de chargement</h2>
+                <p>Impossible de charger les informations de commande. Votre paiement a bien été effectué.</p>
+                <p style="margin-top:1rem;font-size:0.9rem;opacity:0.8;">
+                    Vérifiez votre email pour la confirmation.
+                </p>
+            </div>
+        `;
+        
+        // Vider le panier quand même
+        localStorage.removeItem('cart');
+    }
+}
+
+// Charger les infos au démarrage
+loadOrderInfo();
+
+// Animation d'entrée pour les confettis
+setTimeout(createConfetti, 500);
+</script>
+
+</body>
+</html>

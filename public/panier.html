@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panier – Nexio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+
+<style>
+:root{
+    --neon:#00ffff;
+    --violet:#8b5cf6;
+    --bg:#020617;
+    --bg-card:rgba(15,23,42,.75);
+    --border:rgba(255,255,255,.08);
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:radial-gradient(circle at top,#020617,#000);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+}
+
+/* HEADER */
+header{
+    padding:1rem 2rem;
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(2,6,23,.8);
+}
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.6rem;
+    font-weight:800;
+    background:linear-gradient(90deg,var(--neon),var(--violet));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+}
+
+/* PAGE */
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:4rem 2rem;
+}
+.section h1{
+    text-align:center;
+    margin-bottom:3rem;
+    font-family:'Orbitron',sans-serif;
+    font-size:2.5rem;
+}
+
+.cart{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:2rem;
+    align-items:start;
+}
+
+/* CART ITEMS */
+.cart-items{
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+}
+
+.cart-item{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:1.5rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:all 0.3s ease;
+}
+.cart-item:hover{
+    border-color:var(--neon);
+    box-shadow:0 0 20px rgba(0,255,255,0.1);
+}
+
+.item-info{
+    flex:1;
+}
+.item-info strong{
+    font-size:1.1rem;
+    color:var(--neon);
+}
+.item-price{
+    color:var(--muted);
+    margin-top:0.3rem;
+}
+
+.quantity{
+    display:flex;
+    gap:.8rem;
+    align-items:center;
+    margin:0 1rem;
+}
+.quantity button{
+    width:35px;
+    height:35px;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--neon);
+    border-radius:8px;
+    cursor:pointer;
+    font-size:1.2rem;
+    transition:all 0.2s;
+}
+.quantity button:hover{
+    background:var(--neon);
+    color:#000;
+    transform:scale(1.1);
+}
+.quantity span{
+    min-width:30px;
+    text-align:center;
+    font-weight:600;
+}
+
+.remove{
+    background:none;
+    border:none;
+    color:#ef4444;
+    cursor:pointer;
+    padding:0.5rem 1rem;
+    border-radius:8px;
+    transition:all 0.2s;
+}
+.remove:hover{
+    background:rgba(239,68,68,0.1);
+}
+
+/* SUMMARY */
+.summary{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:2rem;
+    position:sticky;
+    top:100px;
+}
+.summary h2{
+    font-family:'Orbitron',sans-serif;
+    margin-bottom:1.5rem;
+    color:var(--neon);
+}
+.summary-line{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:1rem;
+    padding-bottom:1rem;
+    border-bottom:1px solid var(--border);
+}
+.summary-line:last-of-type{
+    border-bottom:none;
+}
+.summary-total{
+    display:flex;
+    justify-content:space-between;
+    font-size:1.5rem;
+    font-weight:800;
+    color:var(--neon);
+    margin-top:1rem;
+    padding-top:1rem;
+    border-top:2px solid var(--neon);
+}
+
+.checkout{
+    width:100%;
+    margin-top:2rem;
+    padding:1rem 2rem;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    color:#000;
+    font-weight:700;
+    font-size:1.1rem;
+    cursor:pointer;
+    transition:all 0.3s;
+    position:relative;
+    overflow:hidden;
+}
+.checkout:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px rgba(0,255,255,0.3);
+}
+.checkout:active{
+    transform:translateY(0);
+}
+.checkout:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.loading{
+    pointer-events:none;
+}
+.loading::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation:loading 1.5s infinite;
+}
+
+@keyframes loading{
+    to{left:100%}
+}
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    margin-top:4rem;
+    font-size:1.2rem;
+}
+.empty-icon{
+    font-size:4rem;
+    margin-bottom:1rem;
+}
+
+.error-message{
+    background:rgba(239,68,68,0.1);
+    border:1px solid #ef4444;
+    color:#ef4444;
+    padding:1rem;
+    border-radius:12px;
+    margin-top:1rem;
+    display:none;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .cart{
+        grid-template-columns:1fr;
+    }
+    .summary{
+        position:static;
+    }
+    .cart-item{
+        flex-direction:column;
+        gap:1rem;
+    }
+    .quantity{
+        margin:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">NEXIO</div>
+</header>
+
+<section class="section">
+<h1>Votre Panier</h1>
+
+<div class="cart">
+    <div class="cart-items" id="cart-items"></div>
+
+    <div class="summary">
+        <h2>Récapitulatif</h2>
+        
+        <div class="summary-line">
+            <span>Sous-total</span>
+            <span id="subtotal">0,00 €</span>
+        </div>
+
+        <div class="summary-line">
+            <span>Articles</span>
+            <span id="item-count">0</span>
+        </div>
+
+        <div class="summary-total">
+            <span>Total</span>
+            <span id="total">0,00 €</span>
+        </div>
+
+        <button id="checkout-btn" class="checkout" onclick="pay()">
+            Payer avec Stripe
+        </button>
+
+        <div id="error-message" class="error-message"></div>
+    </div>
+</div>
+</section>
+
+<script>
+// Remplacez par votre clé publique Stripe
+const stripe = Stripe("pk_test_51SNceXQwQKy3CH6FkgXPgEFAKFiMlNjxsOJJZ2vM1vov9195O422lbqTEH0TVWs8rrFbKDppdLlHBkdRO1mEmtQl00e4EmWAKF");
+
+/* === GESTION DU PANIER === */
+function getCart(){
+    return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+function saveCart(cart){
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function renderCart(){
+    const cart = getCart();
+    const container = document.getElementById("cart-items");
+    const checkoutBtn = document.getElementById("checkout-btn");
+
+    container.innerHTML = "";
+    let total = 0;
+    let itemCount = 0;
+
+    if(cart.length === 0){
+        container.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">🛒</div>
+                <p>Votre panier est vide</p>
+            </div>
+        `;
+        checkoutBtn.disabled = true;
+    } else {
+        checkoutBtn.disabled = false;
+    }
+
+    cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+        itemCount += item.quantity;
+
+        container.innerHTML += `
+        <div class="cart-item">
+            <div class="item-info">
+                <strong>${item.name}</strong>
+                <div class="item-price">${item.price.toFixed(2)} € / unité</div>
+            </div>
+
+            <div class="quantity">
+                <button onclick="changeQty(${index}, -1)" aria-label="Diminuer quantité">−</button>
+                <span>${item.quantity}</span>
+                <button onclick="changeQty(${index}, 1)" aria-label="Augmenter quantité">+</button>
+            </div>
+
+            <button class="remove" onclick="removeItem(${index})" aria-label="Supprimer">
+                🗑️ Supprimer
+            </button>
+        </div>`;
+    });
+
+    document.getElementById("subtotal").textContent = total.toFixed(2) + " €";
+    document.getElementById("total").textContent = total.toFixed(2) + " €";
+    document.getElementById("item-count").textContent = itemCount;
+}
+
+function changeQty(index, delta){
+    const cart = getCart();
+    cart[index].quantity += delta;
+
+    if(cart[index].quantity <= 0){
+        cart.splice(index, 1);
+    }
+
+    saveCart(cart);
+    renderCart();
+}
+
+function removeItem(index){
+    const cart = getCart();
+    cart.splice(index, 1);
+    saveCart(cart);
+    renderCart();
+}
+
+/* === PAIEMENT STRIPE === */
+async function pay(){
+    const cart = getCart();
+    if(cart.length === 0) return;
+
+    const checkoutBtn = document.getElementById("checkout-btn");
+    const errorDiv = document.getElementById("error-message");
+    
+    // Nettoyer le panier : s'assurer que toutes les descriptions sont valides
+    const cleanedCart = cart.map(item => ({
+        name: item.name || 'Produit',
+        price: item.price || 0,
+        quantity: item.quantity || 1,
+        description: (item.description && item.description.trim() !== '') 
+            ? item.description 
+            : undefined  // Supprime le champ au lieu de mettre une chaîne vide
+    }));
+    
+    // Afficher le loading
+    checkoutBtn.classList.add("loading");
+    checkoutBtn.textContent = "Redirection vers Stripe...";
+    errorDiv.style.display = "none";
+
+    try {
+        const res = await fetch("http://localhost:4242/create-checkout-session", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ cart: cleanedCart })
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.error || "Erreur lors de la création de la session");
+        }
+
+        const session = await res.json();
+        
+        // Redirection vers Stripe Checkout
+        const result = await stripe.redirectToCheckout({ sessionId: session.id });
+        
+        if (result.error) {
+            throw new Error(result.error.message);
+        }
+
+    } catch (error) {
+        console.error("Erreur:", error);
+        errorDiv.textContent = `Une erreur est survenue : ${error.message}`;
+        errorDiv.style.display = "block";
+        
+        checkoutBtn.classList.remove("loading");
+        checkoutBtn.textContent = "Payer avec Stripe";
+    }
+}
+
+// Initialisation
+renderCart();
+</script>
+
+</body>
+</html>

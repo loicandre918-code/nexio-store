@@ -87,7 +87,7 @@ app.get('/payment-status/:sessionId', async (req, res) => {
 // Webhook pour les événements Stripe (optionnel mais recommandé)
 app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
     const sig = req.headers['stripe-signature'];
-    const webhookSecret = 'sk_test_51SNceXQwQKy3CH6FIliiVHEVVnYCY68G3y5kSJYKW98sgRVDMDK2bpGHp4JTEsgCzy0ncMFiMdA7y8nWLeiGJ6Zu00937bPKJb'; // À obtenir dans le dashboard Stripe
+    const webhookSecret = 'whsec_VOTRE_WEBHOOK_SECRET'; // À obtenir dans le dashboard Stripe
 
     let event;
 

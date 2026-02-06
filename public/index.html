@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexio – High Tech Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --neon:#00ffff;
+    --violet:#8b5cf6;
+    --bg:#020617;
+    --bg-card:rgba(15,23,42,.75);
+    --border:rgba(255,255,255,.08);
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:radial-gradient(circle at top,#020617,#000);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+}
+
+/* HEADER */
+header{
+    position:sticky;
+    top:0;
+    backdrop-filter:blur(12px);
+    background:rgba(2,6,23,.7);
+    border-bottom:1px solid var(--border);
+}
+.header{
+    max-width:1400px;
+    margin:auto;
+    padding:1rem 2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.6rem;
+    font-weight:800;
+    background:linear-gradient(90deg,var(--neon),var(--violet));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+nav{
+    display:flex;
+    gap:2rem;
+}
+nav a{
+    text-decoration:none;
+    color:var(--muted);
+}
+nav a:hover{color:var(--neon)}
+.btn-cart{
+    padding:.6rem 1.2rem;
+    border-radius:10px;
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    color:#000;
+    font-weight:700;
+    text-decoration:none;
+}
+
+/* HERO */
+.hero{
+    padding:6rem 2rem 4rem;
+    text-align:center;
+}
+.hero h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:3rem;
+    margin-bottom:1rem;
+}
+.hero p{
+    color:var(--muted);
+}
+
+/* PRODUCTS */
+.section{
+    max-width:1400px;
+    margin:auto;
+    padding:4rem 2rem;
+}
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:2rem;
+}
+.card{
+    position:relative;
+    background:var(--bg-card);
+    backdrop-filter:blur(14px);
+    border-radius:20px;
+    border:1px solid var(--border);
+    overflow:hidden;
+    transition:.4s;
+}
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px #00ffff33;
+}
+.card-img{
+    height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:3.5rem;
+}
+.card-body{
+    padding:1.5rem;
+}
+.price{
+    margin:1rem 0;
+    font-size:1.4rem;
+    font-weight:800;
+    color:var(--neon);
+}
+.old-price{
+    text-decoration:line-through;
+    color:var(--muted);
+    font-size:1rem;
+    margin-right:.5rem;
+}
+.card button{
+    width:100%;
+    padding:.8rem;
+    border:none;
+    border-radius:12px;
+    font-weight:700;
+    background:linear-gradient(135deg,var(--neon),var(--violet));
+    color:#000;
+    cursor:pointer;
+}
+
+/* BADGE PROMO */
+.promo-badge{
+    position:absolute;
+    top:12px;
+    left:12px;
+    background:linear-gradient(135deg,#ff0055,#ff00ff);
+    padding:.3rem .6rem;
+    border-radius:8px;
+    font-size:.7rem;
+    font-weight:700;
+    color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header">
+        <div class="logo">NEXIO</div>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="categorie.html">Catégories</a>
+            <a href="promotions.html">Promotions</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <a href="panier.html" class="btn-cart">
+            Panier (<span id="cart-count">0</span>)
+        </a>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>La Technologie du Futur</h1>
+    <p>Découvrez nos meilleures offres high-tech.</p>
+</section>
+
+<section class="section">
+    <div class="products">
+
+        <!-- PROMO 1 -->
+        <div class="card">
+            <div class="promo-badge">-17%</div>
+            <div class="card-img">💻</div>
+            <div class="card-body">
+                <h3>Laptop Quantum</h3>
+                <div class="price">
+                    <span class="old-price">1200€</span>
+                    999€
+                </div>
+                <button onclick="addToCart('Laptop Quantum',1200,999)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+        <!-- NORMAL -->
+        <div class="card">
+            <div class="card-img">🖥️</div>
+            <div class="card-body">
+                <h3>Station Pro X</h3>
+                <div class="price">1500€</div>
+                <button onclick="addToCart('Station Pro X',1500)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+        <!-- PROMO 2 -->
+        <div class="card">
+            <div class="promo-badge">-25%</div>
+            <div class="card-img">🎧</div>
+            <div class="card-body">
+                <h3>Casque VR Neo</h3>
+                <div class="price">
+                    <span class="old-price">400€</span>
+                    299€
+                </div>
+                <button onclick="addToCart('Casque VR Neo',400,299)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+        <!-- AUTRES PRODUITS -->
+        <div class="card">
+            <div class="card-img">⌚</div>
+            <div class="card-body">
+                <h3>Smartwatch X</h3>
+                <div class="price">250€</div>
+                <button onclick="addToCart('Smartwatch X',250)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img">📱</div>
+            <div class="card-body">
+                <h3>Smartphone Ultra</h3>
+                <div class="price">999€</div>
+                <button onclick="addToCart('Smartphone Ultra',999)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-img">🖱️</div>
+            <div class="card-body">
+                <h3>Souris Gaming Pro</h3>
+                <div class="price">89€</div>
+                <button onclick="addToCart('Souris Gaming Pro',89)">
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+function getCart(){
+    return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+function saveCart(cart){
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function updateCartCount(){
+    const cart = getCart();
+    let total = 0;
+    cart.forEach(item => total += item.quantity);
+    document.getElementById("cart-count").textContent = total;
+}
+
+function addToCart(name, price, promoPrice = null){
+    let finalPrice = promoPrice || price;
+
+    let cart = getCart();
+    let item = cart.find(p => p.name === name);
+
+    if(item){
+        item.quantity++;
+    }else{
+        cart.push({
+            name,
+            price: finalPrice,
+            quantity:1
+        });
+    }
+
+    saveCart(cart);
+    updateCartCount();
+    alert(name + " ajouté au panier !");
+}
+
+updateCartCount();
+</script>
+
+</body>
+</html>
